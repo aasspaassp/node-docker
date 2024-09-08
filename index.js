@@ -11,10 +11,10 @@ const client = new MongoClient(uri);
 
 async function run() {
     try {
-      const database = client.db('sample_mflix');
-      const movies = database.collection('movies');
+      const database = client.db('doctorsapp');
+      const movies = database.collection('doctors');
       // Query for a movie that has the title 'Back to the Future'
-      const query = { title: 'The Favourite' };
+      const query = { name: { $regex: /jane/i } };
       const movie = await movies.findOne(query);
       console.log(movie);
     } finally {
