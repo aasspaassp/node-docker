@@ -1,0 +1,30 @@
+db.createCollection("doctores", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         title: "Doctores Object Validation",
+         required: ["_id","doctorAddress", "specialty", "name", "birthYear"],
+         properties: {
+            _id: { bbsonType: objectId },
+            name: {
+               bsonType: "string",
+               description: "'name' must be a string and is required"
+            },
+            doctorAdress: {
+                bsonType: "string",
+                description: "doctor-adress must be a string and is required"
+             },
+            birthYear: {
+               bsonType: "int",
+               minimum: 1817,
+               maximum: 2817,
+               description: "'year' must be an integer in [ 2017, 3017 ] and is required"
+            },
+            apoinmentPrice: {
+               bsonType: [ "decimal" ],
+               description: "price must be a decimal128 if the field exists"
+            }
+         }
+      }
+   }
+} )
