@@ -26,6 +26,7 @@ export async function getJane(client) {
 
 export async function createDoctor(client, testDoctor, req, res) {
     try {
+        await client.connect();
         // Connect to the "doctorsapp" database and access its "doctores" collection
         const database = client.db("doctorsapp");
         const doctors = database.collection("doctors");
@@ -36,19 +37,29 @@ export async function createDoctor(client, testDoctor, req, res) {
         if (req.data == '') {
             console.log("no data found", res);
         }
+
+        console.log(doc)
         const result = await doctors.insertOne(doc);
+
         // Print the ID of the inserted document
         console.log(`A document was inserted with the _id: ${result.insertedId}`);
         res.send(result.insertedId).status(200)
-    } catch(err){
-        console.log(err.stack);
+    } finally {
+        await client.close();
     }
 }
 
 export async function getAllDoctors(client, req, res) {
-    const doctors = await client.db("doctorsapp").collection("doctors").find({}).limit(10).toArray()
-    console.log(doctors)
-    res.send(doctors).status(200)
+    try {
+        await client.connect();
+        const doctors = await client.db("doctorsapp").collection("doctors").find({}).limit(10).toArray()
+        console.log(doctors)
+        res.send(doctors).status(200)
+    } catch (err) {
+        console.log(err.stack);
+    } finally {
+        await client.close();
+    }
 }
 
 

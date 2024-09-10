@@ -10,6 +10,7 @@ db.createCollection("doctors", {
                     bsonType: "string",
                     description: "'name' must be a string and is required"
                 },
+                
                 doctorAddress: {
                     bsonType: "string",
                     description: "doctor-address must be a string and is required"
