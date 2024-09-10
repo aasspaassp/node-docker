@@ -1,0 +1,61 @@
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    title: 'Doctors Object Validation',
+    required: [
+      '_id',
+      'email',
+      'password',
+      'doctorAddress',
+      'specialty',
+      'name',
+      'birthYear'
+    ],
+    properties: {
+      _id: {
+        bsonType: 'objectId'
+      },
+      name: {
+        bsonType: 'string',
+        description: '\'name\' must be a string and is required'
+      },
+              user: {
+           bsonType: "object",
+           required: [ "email" ],
+           properties: {
+      email: {
+        bsonType: 'string',
+        description: 'email must be a string and is required',
+        unique: true
+      },
+      password: {
+        bsonType: 'string',
+        description: 'email must be a string and is required'
+      }
+           }
+        },
+      doctorAddress: {
+        bsonType: 'string',
+        description: 'doctor-address must be a string and is required'
+      },
+      specialty: {
+        'enum': [
+          'general',
+          'pediatra',
+          'gastroenterologo'
+        ],
+        description: 'specialty must be a string and is required'
+      },
+      birthYear: {
+        bsonType: 'int',
+        minimum: 1817,
+        maximum: 2817,
+        description: '\'birthYear\' must be an integer in [1817, 2817] and is required'
+      },
+      appointmentPrice: {
+        bsonType: 'decimal',
+        description: 'price must be a decimal if the field exists'
+      }
+    }
+  }
+}
