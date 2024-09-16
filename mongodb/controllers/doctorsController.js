@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 
+// prueba conexión
 export async function helloServer(client) {
     try {
         await client.connect();
@@ -12,6 +13,7 @@ export async function helloServer(client) {
     }
 }
 
+// get with query
 export async function getJane(client) {
     try {
         const database = client.db('doctorsapp');
@@ -24,6 +26,7 @@ export async function getJane(client) {
     }
 }
 
+// create generic doctor
 export async function createDoctor(client, testDoctor, req, res) {
     try {
         await client.connect();
@@ -31,7 +34,7 @@ export async function createDoctor(client, testDoctor, req, res) {
         const doctors = database.collection("doctors");
 
         // Create a document to insert
-        testDoctor.passwrod = await bcrypt.hash(testDoctor.password, 12)
+        testDoctor.password = await bcrypt.hash(testDoctor.password, 12)
 
         if (req.data == '') {
             console.log("no data found", res);
@@ -58,7 +61,7 @@ export async function getAllDoctors(client, req, res) {
         res.send(doctors).status(200)
     } catch (err) {
         res.status(400).json({
-            status: "failed create doctor"
+            status: "failed get doctors"
         })
         console.log(err.stack);
     }
@@ -67,6 +70,7 @@ export async function getAllDoctors(client, req, res) {
     }
 }
 
+// login validation email and pass
 export async function login(req, res, client) {
 
     console.log("New request:", req.method, req.url);
@@ -81,8 +85,6 @@ export async function login(req, res, client) {
 
     const { email, password } = req.query
 
-    console.log("email pass", email, password)
-
     if (!email || !password) {
         return res.status(400).json({
             status: "failed",
@@ -96,7 +98,7 @@ export async function login(req, res, client) {
         await client.connect();
         const database = client.db("doctorsapp");
         const doctors = database.collection("doctors");
-        
+
         const query = { email: email };
         const doctor = await doctors.findOne(query);
 
@@ -107,15 +109,25 @@ export async function login(req, res, client) {
             });
         }
 
-        // TODO: Add password verification here
+        const passwordVerification = await bcrypt.compare(password, doctor.password)
 
-        res.status(200).json({
-            status: "success",
-            data: doctor
+        if (passwordVerification) {
+           return res.status(200).json({
+                status: "success",
+                data: doctor
+            });
+            console.log("login doctor", doctor.email)
+        }
+
+
+        return res.status(404).json({
+            status: "failed",
+            message: "Bad password"
         });
+
     } catch (err) {
         console.error("Login error:", err);
-        res.status(500).json({
+        return res.status(500).json({
             status: "failed",
             message: "Internal server error"
         });
