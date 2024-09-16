@@ -1,3 +1,6 @@
+import bcrypt from 'bcrypt'
+
+// prueba conexión
 export async function helloServer(client) {
     try {
         await client.connect();
@@ -10,41 +13,42 @@ export async function helloServer(client) {
     }
 }
 
+// get with query
 export async function getJane(client) {
     try {
         const database = client.db('doctorsapp');
         const movies = database.collection('doctors');
-        // Query for a movie that has the title 'Back to the Future'
         const query = { name: { $regex: /jane/i } };
         const movie = await movies.findOne(query);
         console.log(movie);
     } finally {
-        // Ensures that the client will close when you finish/error
         await client.close();
     }
 }
 
+// create generic doctor
 export async function createDoctor(client, testDoctor, req, res) {
     try {
         await client.connect();
-        // Connect to the "doctorsapp" database and access its "doctores" collection
         const database = client.db("doctorsapp");
         const doctors = database.collection("doctors");
 
         // Create a document to insert
-        const doc = testDoctor
+        testDoctor.password = await bcrypt.hash(testDoctor.password, 12)
 
         if (req.data == '') {
             console.log("no data found", res);
         }
-
-        console.log(doc)
-        const result = await doctors.insertOne(doc);
-
-        // Print the ID of the inserted document
+        const result = await doctors.insertOne(testDoctor);
         console.log(`A document was inserted with the _id: ${result.insertedId}`);
         res.send(result.insertedId).status(200)
-    } finally {
+    } catch (err) {
+        res.status(400).json({
+            status: "failed create doctor"
+        })
+        console.log(err.stack);
+    }
+    finally {
         await client.close();
     }
 }
@@ -56,11 +60,80 @@ export async function getAllDoctors(client, req, res) {
         console.log(doctors)
         res.send(doctors).status(200)
     } catch (err) {
+        res.status(400).json({
+            status: "failed get doctors"
+        })
         console.log(err.stack);
-    } finally {
+    }
+    finally {
         await client.close();
     }
 }
 
+// login validation email and pass
+export async function login(req, res, client) {
+
+    console.log("New request:", req.method, req.url);
+    console.log("Request params:", req.query);
+
+    if (!req || typeof req !== 'object') {
+        return res.status(400).json({
+            status: "failed",
+            message: "Invalid request body"
+        });
+    }
+
+    const { email, password } = req.query
+
+    if (!email || !password) {
+        return res.status(400).json({
+            status: "failed",
+            message: "Email and password are required"
+        });
+    }
+
+    try {
+
+
+        await client.connect();
+        const database = client.db("doctorsapp");
+        const doctors = database.collection("doctors");
+
+        const query = { email: email };
+        const doctor = await doctors.findOne(query);
+
+        if (!doctor) {
+            return res.status(404).json({
+                status: "failed",
+                message: "Doctor not found"
+            });
+        }
+
+        const passwordVerification = await bcrypt.compare(password, doctor.password)
+
+        if (passwordVerification) {
+           return res.status(200).json({
+                status: "success",
+                data: doctor
+            });
+            console.log("login doctor", doctor.email)
+        }
+
+
+        return res.status(404).json({
+            status: "failed",
+            message: "Bad password"
+        });
+
+    } catch (err) {
+        console.error("Login error:", err);
+        return res.status(500).json({
+            status: "failed",
+            message: "Internal server error"
+        });
+    } finally {
+        await client.close();
+    }
+}
 
 
