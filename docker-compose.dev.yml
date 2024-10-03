@@ -1,4 +1,7 @@
 services:
+  ngnix:
+    ports: 
+      - "3000:80"
   node-app:
     build:
       context: .
