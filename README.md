@@ -22,5 +22,6 @@ curl -X POST http://localhost:3000/api/login?email=yH1th@doctorsapp.com&password
 
 curl -X POST http://localhost:3000/api/login?email=eqtoo@doctorsapp.com&password=dalepapimasduro
 
+
 reiniciar sin perder volumenes
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d -V 
