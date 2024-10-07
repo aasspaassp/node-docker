@@ -16,3 +16,9 @@ services:
       - MONGO_PASSWORD=example
       - SESSION_SECRET=secret
     command: npm run dev
+  spaassp-server:
+    build:
+      context: ./spaasspserver
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
