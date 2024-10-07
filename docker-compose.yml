@@ -27,5 +27,12 @@ services:
   redis:
     image: redis
 
+  spaassp-server:
+    build:
+      context: ./spaasspserver
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    
 volumes:
   mongo-db:
