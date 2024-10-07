@@ -17,3 +17,9 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+  spaassp-server:
+    build:
+      context: ./spaasspserver
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
