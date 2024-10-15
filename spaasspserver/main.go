@@ -26,6 +26,6 @@ func main() {
 
 	http.Handle("/spaassp/", http.StripPrefix("/spaassp/", http.FileServer(http.Dir(dir))))
 
-	fmt.Printf("hi to the server on :8080\n")
+	fmt.Printf(":) hi to the server on :8080\n")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
