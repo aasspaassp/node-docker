@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrés González Anzures | Developer & Sound Designer</title>
+    <style>
+        @font-face {
+            font-family: 'Handel Gothic';
+            src: url('fonts/HandelGothic.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'Futura';
+            src: url('fonts/Futura.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'TexGyra';
+            src: url('fonts/TexGyra.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'American Uncial';
+            src: url('fonts/AmericanUncial.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        :root {
+            --main-bg: #000000;
+            --text: #ffffff;
+            --text-secondary: #aaaaaa;
+            --border: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--main-bg);
+            color: var(--text);
+            font-family: 'TexGyra', sans-serif;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--main-bg);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background: radial-gradient(circle at 40% 40%, 
+                rgba(220, 220, 225, 0.9) 0%, 
+                rgba(180, 180, 185, 0.8) 30%, 
+                rgba(150, 150, 155, 0.4) 60%, 
+                rgba(100, 100, 105, 0.1) 100%);
+            position: relative;
+            box-shadow: 0 0 10px rgba(180, 180, 185, 0.5);
+        }
+
+        .name {
+            font-family: 'Futura', sans-serif;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-family: 'Futura', sans-serif;
+            color: var(--text);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--text);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h2 {
+            font-family: 'Handel Gothic', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            display: inline-block;
+            color: var(--text-secondary);
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--text-secondary);
+        }
+
+        .project-list {
+            list-style: none;
+        }
+
+        .project-item {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-title {
+            font-family: 'Handel Gothic', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tech {
+            border: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-link {
+            color: var(--text);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            border: 1px solid var(--text);
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .project-link:hover {
+            background-color: var(--text);
+            color: var(--main-bg);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .skill-category h4 {
+            font-family: 'Handel Gothic', sans-serif;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .skill-indicator {
+            width: 8px;
+            height: 8px;
+            border: 1px solid var(--text-secondary);
+            margin-right: 0.5rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .contact-item h4 {
+            font-family: 'Handel Gothic', sans-serif;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .contact-item a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .contact-item a:hover {
+            color: var(--text);
+        }
+
+        footer {
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .about-content,
+            .skills-container,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="nav-brand">
+                    <div class="logo"></div>
+                    <div class="name">Andrés González Anzures</div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            
+            <ul class="project-list">
+                <li class="project-item">
+                    <div class="project-title">MPC API</div>
+                    <div class="project-description">An API to convert audio files to MPC 1000 format using FFmpeg and Go</div>
+                    <div class="tech-tags">
+                        <span class="tech">Go</span>
+                        <span class="tech">FFmpeg</span>
+                        <span class="tech">REST API</span>
+                    </div>
+                    <a href="/mpc-converter" class="project-link">View</a>
+                </li>
+                
+                <li class="project-item">
+                    <div class="project-title">Sound Visualizer</div>
+                    <div class="project-description">Real-time audio visualization using P5.js and Tone.js</div>
+                    <div class="tech-tags">
+                        <span class="tech">JavaScript</span>
+                        <span class="tech">P5.js</span>
+                        <span class="tech">Tone.js</span>
+                    </div>
+                    <a href="/sound-visualizer" class="project-link">View</a>
+                </li>
+                
+                <li class="project-item">
+                    <div class="project-title">Docker CRUD App</div>
+                    <div class="project-description">Full-stack containerized application with authentication, database integration, and RESTful API endpoints</div>
+                    <div class="tech-tags">
+                        <span class="tech">Go</span>
+                        <span class="tech">PostgreSQL</span>
+                        <span class="tech">Docker</span>
+                        <span class="tech">Redis</span>
+                    </div>
+                    <a href="/node-docker" class="project-link">View</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Developer and electronic music producer based in Mexico City with a background in philosophy. My journey began with a degree in philosophy (2014-2018), where I explored the works of Guattari, Deleuze, and Foucault.</p>
+                    
+                    <p>After working in education and marketing, I discovered programming in 2021. Currently completing a computer science degree at UTEL while building projects that merge technical skills with my love for electronic music.</p>
+                    
+                    <p>Most recent professional experience was as a Junior SRE at Boletia, resolving technical issues related to Go, AWS, and PostgreSQL databases.</p>
+                </div>
+                
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h4>Technical</h4>
+                        <ul class="skill-list">
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>Go</span>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>JavaScript/React</span>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>Docker</span>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>PostgreSQL</span>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>AWS</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Sound</h4>
+                        <ul class="skill-list">
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>Drone & Ambient</span>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>Elektron Syntakt</span>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>MPC 1000</span>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>Audio Processing</span>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-indicator"></div>
+                                <span>Live Performance</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h4>Email</h4>
+                    <a href="mailto:your.email@example.com">your.email@example.com</a>
+                </div>
+                
+                <div class="contact-item">
+                    <h4>GitHub</h4>
+                    <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a>
+                </div>
+                
+                <div class="contact-item">
+                    <h4>LinkedIn</h4>
+                    <a href="https://linkedin.com/in/yourusername" target="_blank">linkedin.com/in/yourusername</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Andrés González Anzures</p>
+        </div>
+    </footer>
+</body>
+</html>
