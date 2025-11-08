@@ -45,7 +45,6 @@ HTML = """
       {% for session in syllabus %}
         <li>
           <strong>{{ session.title }}</strong>
-          {% if session.optional %}<span class="optional">(opcional)</span>{% endif %}
           <ul>
             {% for topic in session.topics %}
               <li>{{ topic }}</li>
@@ -71,6 +70,7 @@ HTML = """
 def home():
     schedule = [
         "Viernes 7 de noviembre 19:00–21:00",
+        "Domingo 9 de noviembre 18:00–20:00 (Sesión 1)",
         "Miércoles 12 de noviembre 19:00–21:00",
         "Viernes 21 de noviembre 19:00–21:00",
     ]
