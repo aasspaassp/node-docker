@@ -1,6 +1,7 @@
 from flask import Flask, render_template_string
 
 app = Flask(__name__)
+app.config['APPLICATION_ROOT'] = '/pythoncourse'
 
 HTML = """
 <!doctype html>
@@ -66,7 +67,7 @@ HTML = """
 </html>
 """
 
-@app.get("/")
+@app.get("/pythoncourse/")
 def home():
     schedule = [
         "Viernes 7 de noviembre 19:00–21:00",
