@@ -23,3 +23,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+  python-course:
+    build:
+      context: ./pythoncourse
+      dockerfile: Dockerfile
+    ports:
+      - "5050:5050"
