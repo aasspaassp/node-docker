@@ -1,7 +1,14 @@
 from flask import Flask, render_template_string
 
+from flask import Flask, render_template_string, request
+
 app = Flask(__name__)
-app.config['APPLICATION_ROOT'] = '/pythoncourse'
+
+# Add request logging
+@app.before_request
+def log_request_info():
+    app.logger.info('Headers: %s', request.headers)
+    app.logger.info('Path: %s', request.path)
 
 HTML = """
 <!doctype html>
@@ -67,7 +74,7 @@ HTML = """
 </html>
 """
 
-@app.get("/pythoncourse/")
+@app.get("/")
 def home():
     schedule = [
         "Viernes 7 de noviembre 19:00–21:00",
