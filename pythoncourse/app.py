@@ -3,6 +3,22 @@ from flask import Flask, render_template_string, request
 
 app = Flask(__name__)
 
+# Strip the /pythoncourse prefix from all requests
+class PrefixMiddleware(object):
+    def __init__(self, app, prefix='/pythoncourse'):
+        self.app = app
+        self.prefix = prefix
+
+    def __call__(self, environ, start_response):
+        if environ['PATH_INFO'].startswith(self.prefix):
+            environ['PATH_INFO'] = environ['PATH_INFO'][len(self.prefix):]
+            environ['SCRIPT_NAME'] = self.prefix
+            return self.app(environ, start_response)
+        else:
+            return self.app(environ, start_response)
+
+app.wsgi_app = PrefixMiddleware(app.wsgi_app)
+
 # Add request logging
 @app.before_request
 def log_request_info():
