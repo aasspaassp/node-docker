@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Strip the /pythoncourse prefix from all requests
 class PrefixMiddleware(object):
-    def __init__(self, app, prefix='/pythoncourse'):
+    def __init__(self, app, prefix='/python-course'):
         self.app = app
         self.prefix = prefix
 
