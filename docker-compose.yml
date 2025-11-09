@@ -40,6 +40,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5050:5050"
+    environment:
+      - FLASK_SERVER_PORT=5050
     
 volumes:
   mongo-db:
